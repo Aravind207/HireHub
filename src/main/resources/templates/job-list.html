@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings</title>
+	<script th:inline="javascript">
+	      /* Thymeleaf script to handle pop-up messages */
+	      var successMessage = /*[[${success}]]*/ '';
+	      var infoMessage = /*[[${info}]]*/ '';
+	      var errorMessage = /*[[${error}]]*/ '';
+	
+	      window.onload = function() {
+	          if (successMessage) {
+	              alert(successMessage);
+	          }
+	          if (infoMessage) {
+	              alert(infoMessage);
+	          }
+	          if (errorMessage) {
+	              alert(errorMessage);
+	          }
+	      };
+	  </script>
+</head>
+<body>
+    <h1><p>Welcome <span th:text="${user.firstname}">Firstname</span> <span th:text="${user.lastname}">Lastname</span>!</p></h1> 
+	<h3>Available Jobs	</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Job Designation</th>
+                <th>Job Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="job : ${jobs}">
+                <td th:text="${job.organization}"></td>
+                <td th:text="${job.jobDesignation}"></td>
+                <td th:text="${job.jobDescription}"></td>
+                <td>
+                    <form th:action="@{/apply-job}" method="post">
+                        <input type="hidden" th:name="jobId" th:value="${job.jobId}" />
+                        <button type="submit">Apply</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/login">Back to Home</a><br>
+		<a href="/applied-jobs">My Applied Jobs</a>
+    </div>
+</body>
+</html>
+
+
+
+
+

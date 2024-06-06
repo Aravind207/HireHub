@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Applied Jobs</title>
+</head>
+<body>
+    <h1>My Applied Jobs</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Job Designation</th>
+                <th>Job Description</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over appliedJobs and display each job -->
+            <tr th:each="job : ${appliedJobs}">
+                <td th:text="${job.organization}"></td>
+                <td th:text="${job.jobDesignation}"></td>
+                <td th:text="${job.jobDescription}"></td>
+                <!-- Add more columns as needed -->
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/job-list">Back to Available Jobs</a>
+    </div>
+</body>
+</html>
