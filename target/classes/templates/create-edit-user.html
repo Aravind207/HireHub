@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${user.id != null} ? 'Edit User' : 'Create User'"></title>
+	<script th:inline="javascript">
+	        /* Thymeleaf script to handle pop-up messages */
+	        var errorMessage = /*[[${errorMessage}]]*/ '';
+	        
+	        window.onload = function() {
+	            if (errorMessage) {
+	                alert(errorMessage);
+	            }
+	        };
+	    </script>
+</head>
+<body>
+    <h1 th:text="${user.id != null} ? 'Edit User' : 'Create User'"></h1>
+    <form th:action="${user.id != null} ? @{'/users/update/' + ${user.id}} : @{'/users/create'}" th:object="${user}" method="post">
+        <div>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" th:field="*{firstname}" required>
+        </div>
+        <div>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" th:field="*{lastname}" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required>
+        </div>
+        <!-- Display the password field only when creating a new user -->
+        <div th:if="${user.id == null}">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <a href="/demo">Back to List</a>
+</body>
+</html>

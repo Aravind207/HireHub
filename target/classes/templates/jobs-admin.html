@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jobs Administration</title>
+    <script th:inline="javascript">
+        window.onload = function() {
+            var message = /*[[${successMessage}]]*/ 'null';
+            if (message && message !== 'null' && message.length > 0) {
+                alert(message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Job Listings</h1>
+    <div>
+        <a th:href="@{/jobs/create}">Add New Job</a>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Job Designation</th>
+                <th>Job Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="job : ${jobs}">
+                <td th:text="${job.organization}"></td>
+                <td th:text="${job.jobDesignation}"></td>
+                <td th:text="${job.jobDescription}"></td>
+                <td>
+                    <a th:href="@{/jobs/edit/{id}(id=${job.jobId})}">Edit</a> |
+                    <a th:href="@{/jobs/delete/{id}(id=${job.jobId})}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+				<td th:if="${userRole == 'USER'}">
+				    <form th:action="@{/apply-job(jobId=${job.jobId})}" method="post">
+				        <button type="submit">Apply</button>
+				    </form>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/login">Back to Home Page</a><br  />
+		<a href="/demo">Handle User Details</a>
+    </div>
+</body>
+</html>

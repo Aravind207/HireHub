@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Admin Page</title>
+	<script th:inline="javascript">
+	    window.onload = function() {
+	        // Ensure that successMessage is defined and not null or empty
+	        var message = /*[[${successMessage}]]*/ 'null';
+	        if (message && message !== 'null' && message.length > 0) {
+	            alert(message);
+	        }
+	    }
+	</script>
+
+</head>
+<body>
+    <h1>User Details</h1>
+    <div>
+        <a th:href="@{/users/create}">Create New User</a>  <!-- Link to create new user form -->
+    </div>
+    <table border="1">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>  <!-- Column for Edit/Delete buttons -->
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstname}"></td>
+            <td th:text="${user.lastname}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a> | <!-- Link to edit user form -->
+                <a th:href="@{/users/delete/{id}(id=${user.id})}" onclick="return confirm('Are you sure?')">Delete</a> <!-- Link to delete user -->
+            </td>
+        </tr>
+    </table>
+	<div>
+		<a href="/jobs">Back to Admin Page</a>
+	</div>
+</body>
+</html>
